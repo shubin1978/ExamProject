@@ -1,0 +1,30 @@
+@startuml
+
+enum Status {
+Active
+Repair
+Conserve
+} 
+
+Status <--* Profile
+abstract class Profile
+{
++ AT : int
++ Title : string
++ Position : string
++ Status : Status
+}
+
+Unit <--o Object
+Profile <|-- Object
+class Object {
++ Equipment : Unit[]
+}
+
+class Unit {
++ Id : int
++ Cathegory : string
+}
+
+
+@enduml
