@@ -38,16 +38,8 @@ public static class CompanyView
         bool exit = true;
         var newObject = new Object();
         
-        string number;
         var regexp = @"^[0-9]{9}$";
-        bool res = false;
-
-        do
-        {
-            number = CLI.InputString("Введите номер терминала:");
-            res = Validation2(number, regexp);
-        } while (!res);
-        newObject.At = Convert.ToInt32(number);
+        newObject.At = Convert.ToInt32(Valid(regexp));
         newObject.Title = CLI.InputString("Введите название и гаражный номер");
         newObject.Position = CLI.InputString("Введите местоположение объекта");
         newObject.Status = Status.Avtive;
@@ -57,9 +49,10 @@ public static class CompanyView
             string yesNo = CLI.InputString("Добавить оборудование? Y / N");
             if (yesNo == "Y" || yesNo == "y")
             {
+                var regexpUnit = @"^[0-9]{3}$";
                 newObject.Equipment.Add(new Unit {
                     Cathegory = CLI.InputString("Введите категорию оборудования"),
-                    Id = Convert.ToInt32(CLI.InputString("Введите номер"))
+                    Id = Convert.ToInt32(Valid(regexpUnit))
                 });
             }
             else
@@ -70,14 +63,23 @@ public static class CompanyView
         return newObject;
     }
     
-    public static bool Validation (this string str, string regExp)
+    public static string Valid(string regExp)
     {
-        var regexp = new Regex(regExp);
-        return regexp.IsMatch(str);
+        bool exit = false;
+        string str = null;
+        do
+        {
+            var regexp = new Regex(regExp);
+            str = CLI.InputString("Введите номер:");
+            exit = regexp.IsMatch(str);
+        } while (!exit);
+
+        return str;
     }
     public static bool Validation2 (string str, string regExp)
     {
         var regexp = new Regex(regExp);
         return regexp.IsMatch(str);
     }
+    
 } 
