@@ -1,4 +1,5 @@
-﻿using ProjectApp.Model;
+﻿using System.Text.RegularExpressions;
+using ProjectApp.Model;
 using Object = ProjectApp.Model.Object;
 
 namespace ProjectApp.CLI;
@@ -36,7 +37,17 @@ public static class CompanyView
     {
         bool exit = true;
         var newObject = new Object();
-        newObject.At = Convert.ToInt32(CLI.InputString("Введите номер терминала"));
+        
+        string number;
+        var regexp = @"^[0-9]{9}$";
+        bool res = false;
+
+        do
+        {
+            number = CLI.InputString("Введите номер терминала:");
+            res = Validation2(number, regexp);
+        } while (!res);
+        newObject.At = Convert.ToInt32(number);
         newObject.Title = CLI.InputString("Введите название и гаражный номер");
         newObject.Position = CLI.InputString("Введите местоположение объекта");
         newObject.Status = Status.Avtive;
@@ -57,5 +68,16 @@ public static class CompanyView
             }
         }
         return newObject;
+    }
+    
+    public static bool Validation (this string str, string regExp)
+    {
+        var regexp = new Regex(regExp);
+        return regexp.IsMatch(str);
+    }
+    public static bool Validation2 (string str, string regExp)
+    {
+        var regexp = new Regex(regExp);
+        return regexp.IsMatch(str);
     }
 } 
