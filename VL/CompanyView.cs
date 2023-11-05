@@ -1,4 +1,5 @@
-﻿using Object = ProjectApp.Model.Object;
+﻿using ProjectApp.Model;
+using Object = ProjectApp.Model.Object;
 
 namespace ProjectApp.CLI;
 
@@ -29,5 +30,32 @@ public static class CompanyView
         CLI.PrintInfo("3- Поиск объектов по номеру ");
         CLI.PrintInfo("4- Добавить объект");
         CLI.PrintInfo("0- Завершение работы ");
+    }
+
+    public static Object NewObj()
+    {
+        bool exit = true;
+        var newObject = new Object();
+        newObject.At = Convert.ToInt32(CLI.InputString("Введите номер терминала"));
+        newObject.Title = CLI.InputString("Введите название и гаражный номер");
+        newObject.Position = CLI.InputString("Введите местоположение объекта");
+        newObject.Status = Status.Avtive;
+        newObject.Equipment = new List<Unit>();
+        while (exit)
+        {
+            string yesNo = CLI.InputString("Добавить оборудование? Y / N");
+            if (yesNo == "Y" || yesNo == "y")
+            {
+                newObject.Equipment.Add(new Unit {
+                    Cathegory = CLI.InputString("Введите категорию оборудования"),
+                    Id = Convert.ToInt32(CLI.InputString("Введите номер"))
+                });
+            }
+            else
+            {
+                exit = false;
+            }
+        }
+        return newObject;
     }
 } 

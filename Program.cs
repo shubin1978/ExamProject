@@ -44,15 +44,7 @@ do
 
   case "4":
   {
-   var newObject = new Object();
-   newObject.At = Convert.ToInt32(CLI.InputString("Введите номер терминала"));
-   newObject.Title = CLI.InputString("Введите название и гаражный номер");
-   newObject.Position = CLI.InputString("Введите местоположение объекта");
-   newObject.Status = Status.Avtive;
-   newObject.Equipment = new List<Unit>
-   {
-    new Unit(5555, "LLS5")
-   };
+   var newObject = CompanyView.NewObj();
    company.AddObject(newObject);
   }
    break;
