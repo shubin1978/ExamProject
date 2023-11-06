@@ -30,16 +30,28 @@ public static class CompanyView
         CLI.PrintInfo("2- Поиск объектов по локации");
         CLI.PrintInfo("3- Поиск объектов по номеру ");
         CLI.PrintInfo("4- Добавить объект");
+        CLI.PrintInfo("5- Обновить статус");
         CLI.PrintInfo("0- Завершение работы ");
     }
 
-    public static Object NewObj()
+    public static Object NewObj(List<Object> objects)
     {
         bool exit = true;
         var newObject = new Object();
         
         var regexp = @"^[0-9]{9}$";
-        newObject.At = Convert.ToInt32(Valid(regexp));
+        int number = Convert.ToInt32(Valid(regexp));
+        
+        bool end = objects.Exists(a => a.At == number);
+
+        while (end)
+        {
+            var num = Convert.ToInt32(CLI.InputString("АТ с таким номером существует, введите заново")); 
+            end = objects.Exists(a => a.At == num);
+            number = num;  
+        }
+
+        newObject.At = number;
         newObject.Title = CLI.InputString("Введите название и гаражный номер");
         newObject.Position = CLI.InputString("Введите местоположение объекта");
         newObject.Status = Status.Avtive;
@@ -75,11 +87,6 @@ public static class CompanyView
         } while (!exit);
 
         return str;
-    }
-    public static bool Validation2 (string str, string regExp)
-    {
-        var regexp = new Regex(regExp);
-        return regexp.IsMatch(str);
     }
     
 } 

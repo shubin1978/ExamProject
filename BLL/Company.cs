@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices.JavaScript;
 using ProjectApp.DAL;
+using ProjectApp.Model;
 using Object = ProjectApp.Model.Object;
 
 namespace ProjectApp.BLL;
@@ -28,19 +29,14 @@ public class Company
     {
         _context.Objects.Add(obj); 
         _context.ExportObjects();
-        
     }
-    /*public Object FindObjectByTitle(string title)
+
+    public void UpdateStatus(int at, Status newStatus)
     {
-        foreach (var ob in _context.Objects)
-        {
-            if (ob.Title.Contains(title))
-            {
-                return ob;
-            }
-        }
-        return null;
-    }*/
+        var obj = _context.Objects.Find(o => o.At == at);
+        obj.Status = newStatus;
+        _context.ExportObjects();
+    }
 
     #endregion
 }
