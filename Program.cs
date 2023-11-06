@@ -44,11 +44,26 @@ do
 
   case "4":
   {
-   var newObject = CompanyView.NewObj();
+   var newObject = CompanyView.NewObj(company.GetAllObjects());
    company.AddObject(newObject);
   }
    break;
+
+  case "5":
+  {
+   var number = Convert.ToInt32(CLI.InputString("Введите номер АТ объекта"));
+   var newStatus = (Status)Convert.ToInt32(CLI.InputString("Введите новый статус объекта:"));
+   company.UpdateStatus(number, newStatus);
+  }
+   break;
+  
+  default:
+  {
+   exit = true;
+   break;
+  }
  }
+ 
 } while (!exit);
 
 
