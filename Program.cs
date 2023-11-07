@@ -51,8 +51,20 @@ do
 
   case "5":
   {
-   var number = Convert.ToInt32(CLI.InputString("Введите номер АТ объекта"));
-   var newStatus = (Status)Convert.ToInt32(CLI.InputString("Введите новый статус объекта:"));
+   var regexp = @"^[0-9]{9}$";
+   int number = Convert.ToInt32(CompanyView.Valid(regexp, "Введите номер АТ (9 зн.)"));
+   
+   bool exitCicle = company.GetAllObjects().Exists(a => a.At == number);
+
+   while (!exitCicle)
+   {
+    var num = Convert.ToInt32(CLI.InputString("АТ с таким номером не существует, введите заново")); 
+    exitCicle = company.GetAllObjects().Exists(a => a.At == num);
+    number = num;  
+   }
+   var regexp1 = @"^[0-2]{1}$";
+   var newStatus = (Status)Convert.ToInt32(CompanyView.Valid(regexp1, "Введите статус: 0-Active," +
+                                                                      " 1-Repair, 2-Conserve" ));
    company.UpdateStatus(number, newStatus);
   }
    break;
@@ -65,40 +77,3 @@ do
  }
  
 } while (!exit);
-
-
-/*context.Objects = new List<Object>
-{
- new()
- {
-  At = 326001010,
-  Title = "PC-400_#605",
-  Position = "Quarry",
-  Status = Status.Avtive,
-  Equipment = new List<Unit>
-  {
-   new Unit(2222, "LLS4"),
-
-   new Unit(2223, "LLS4")
-  }
- }
-};*/
-
-/*var objects = company.GetAllObjects();
-CompanyView.ShowObjects(objects);
-var position = CLI.InputString("Введите локацию для поиска");
-var listObjectsLocation = company.FindObjectByPlace(position);
-CompanyView.ShowObjects(listObjectsLocation);
-var title = CLI.InputString("Введите номер объекта для поиска");
-var objectTitle = company.FindObjectsByTitle(title);
-CompanyView.ShowObjects(objectTitle);*/
-
-/*foreach (var item in objects)
-{
- Console.WriteLine($"{item.At} {item.Title} --> {item.Position} : {item.Status}");
- Console.WriteLine("   EQUIPMENT :");
- foreach (var u in item.Equipment)
- {
-  Console.WriteLine($"\t{u.Cathegory} # {u.Id}");
- }
-}*/
