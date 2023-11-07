@@ -40,14 +40,14 @@ public static class CompanyView
         var newObject = new Object();
         
         var regexp = @"^[0-9]{9}$";
-        int number = Convert.ToInt32(Valid(regexp));
+        int number = Convert.ToInt32(Valid(regexp, "Введите номер АТ (9 зн.)"));
         
-        bool end = objects.Exists(a => a.At == number);
+        bool cicle = objects.Exists(a => a.At == number);
 
-        while (end)
+        while (cicle)
         {
             var num = Convert.ToInt32(CLI.InputString("АТ с таким номером существует, введите заново")); 
-            end = objects.Exists(a => a.At == num);
+            cicle = objects.Exists(a => a.At == num);
             number = num;  
         }
 
@@ -64,7 +64,7 @@ public static class CompanyView
                 var regexpUnit = @"^[0-9]{3}$";
                 newObject.Equipment.Add(new Unit {
                     Cathegory = CLI.InputString("Введите категорию оборудования"),
-                    Id = Convert.ToInt32(Valid(regexpUnit))
+                    Id = Convert.ToInt32(Valid(regexpUnit, "Введите номер оборудования (3 зн.)"))
                 });
             }
             else
@@ -75,14 +75,14 @@ public static class CompanyView
         return newObject;
     }
     
-    public static string Valid(string regExp)
+    public static string Valid(string regExp, string message)
     {
         bool exit = false;
         string str = null;
         do
         {
             var regexp = new Regex(regExp);
-            str = CLI.InputString("Введите номер:");
+            str = CLI.InputString(message);
             exit = regexp.IsMatch(str);
         } while (!exit);
 
