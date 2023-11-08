@@ -54,18 +54,34 @@ do
    var regexp = @"^[0-9]{9}$";
    int number = Convert.ToInt32(CompanyView.Valid(regexp, "Введите номер АТ (9 зн.)"));
    
-   bool exitCicle = company.GetAllObjects().Exists(a => a.At == number);
+   bool exitCicle = company.GetAllObjects().Exists(o => o.At == number);
 
    while (!exitCicle)
    {
     var num = Convert.ToInt32(CLI.InputString("АТ с таким номером не существует, введите заново")); 
-    exitCicle = company.GetAllObjects().Exists(a => a.At == num);
+    exitCicle = company.GetAllObjects().Exists(o => o.At == num);
     number = num;  
    }
    var regexp1 = @"^[0-2]{1}$";
    var newStatus = (Status)Convert.ToInt32(CompanyView.Valid(regexp1, "Введите статус: 0-Active," +
                                                                       " 1-Repair, 2-Conserve" ));
    company.UpdateStatus(number, newStatus);
+  }
+   break;
+
+  case "6":
+  {
+   int numAt = CompanyView.InputInt();
+   bool isNumAt = company.GetAllObjects().Exists(o => o.At == numAt);
+   if (isNumAt)
+   {
+    CompanyView.ShowObject(company.FindObjectByAT(numAt));
+   }
+   else
+   {
+    CLI.PrintError("Объекта с таким АТ нет");
+   }
+   
   }
    break;
   

@@ -17,15 +17,21 @@ public class Company
 
     #region Objects
 
-    public List<Object> GetAllObjects() => _context.Objects;
-    public List<Object> FindObjectByPlace(string pos) => _context.Objects.Where
+    public List<Object?> GetAllObjects() => _context.Objects;
+    public List<Object?> FindObjectByPlace(string pos) => _context.Objects.Where
         (o => o.Position.Contains(pos)).ToList();
 
-    public List<Object> FindObjectsByTitle(string title) => (from obj in _context.Objects
+    public List<Object?> FindObjectsByTitle(string title) => (from obj in _context.Objects
         where obj.Title.Contains(title)
         select obj).ToList();
 
-    public void AddObject(Object obj)
+    public Object? FindObjectByAT(int at)
+    {
+        return _context.Objects.Find(o => o != null && o.At == at);
+    }
+    
+
+    public void AddObject(Object? obj)
     {
         _context.Objects.Add(obj); 
         _context.ExportObjects();

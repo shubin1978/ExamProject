@@ -6,7 +6,7 @@ namespace ProjectApp.CLI;
 
 public static class CompanyView
 {
-    public static void ShowObject(Object obj)
+    public static void ShowObject(Object? obj)
     {
         CLI.PrintInfo($"{obj.At} {obj.Title} : {obj.Position} -> {obj.Status}");
         foreach (var u in obj.Equipment)
@@ -15,7 +15,7 @@ public static class CompanyView
         }
     }
 
-    public static void ShowObjects(List<Object> objects)
+    public static void ShowObjects(List<Object?> objects)
     {
         foreach (var o in objects)
         {
@@ -25,16 +25,17 @@ public static class CompanyView
 
     public static void PrintMenu()
     {
-        CLI.PrintInfo("= M E N U = ");
-        CLI.PrintInfo("1- Список всей техники");
-        CLI.PrintInfo("2- Поиск объектов по локации");
-        CLI.PrintInfo("3- Поиск объектов по номеру ");
-        CLI.PrintInfo("4- Добавить объект");
-        CLI.PrintInfo("5- Обновить статус");
-        CLI.PrintInfo("0- Завершение работы ");
+        CLI.PrintMenu("= M E N U = ");
+        CLI.PrintMenu("1- Список всей техники");
+        CLI.PrintMenu("2- Поиск объектов по локации");
+        CLI.PrintMenu("3- Поиск объектов по номеру ");
+        CLI.PrintMenu("4- Добавить объект");
+        CLI.PrintMenu("5- Обновить статус");
+        CLI.PrintMenu("6- Найти объект по номеру АТ");
+        CLI.PrintMenu("0- Завершение работы ");
     }
 
-    public static Object NewObj(List<Object> objects)
+    public static Object? NewObj(List<Object?> objects)
     {
         bool exit = true;
         var newObject = new Object();
@@ -89,4 +90,32 @@ public static class CompanyView
         return str;
     }
     
+    public static int InputInt()
+    {
+        CLI.PrintInfo("Введите номер АТ");
+        int number = 0;
+        bool repeat = true;
+        do
+        {
+            try
+            {
+                number = Convert.ToInt32(Console.ReadLine());
+                repeat = false;
+                return number;
+            }
+            catch (FormatException)
+            {
+                CLI.PrintError("Требуется вводить только цифры");
+                CLI.PrintInfo("Повторите ввод:");
+            }
+            catch (OverflowException)
+            {
+                CLI.PrintError("Число слишком большое");
+                CLI.PrintInfo("Повторите ввод:");
+            }
+            
+        } while (repeat);
+
+        return number;
+    }
 } 
