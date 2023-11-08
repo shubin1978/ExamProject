@@ -22,6 +22,7 @@ do
   case "1":
   {
    var objects = company.GetAllObjects();
+   company.SortByAt();
    CompanyView.ShowObjects(objects);
   }
    break;
