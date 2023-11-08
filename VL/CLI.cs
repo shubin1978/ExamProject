@@ -20,7 +20,15 @@ public static class CLI
     {
         PrintLine(message, ConsoleColor.Blue);
     }
-
+    
+    public static void PrintError(string message)
+    {
+        PrintLine(message, ConsoleColor.Red);
+    }
+    public static void PrintMenu(string message)
+    {
+        PrintLine(message, ConsoleColor.Green);
+    }
     public static string InputString(string message)
     {
         Print(message,ConsoleColor.Yellow);
