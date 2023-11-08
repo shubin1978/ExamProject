@@ -34,6 +34,7 @@ public class Company
     public void AddObject(Object? obj)
     {
         _context.Objects.Add(obj); 
+        SortByAt();
         _context.ExportObjects();
     }
 
@@ -41,7 +42,13 @@ public class Company
     {
         var obj = _context.Objects.Find(o => o.At == at);
         obj.Status = newStatus;
+        SortByAt();
         _context.ExportObjects();
+    }
+
+    public void SortByAt()
+    {
+        _context.Objects.Sort((o1, o2) => o1.At.CompareTo(o2.At));
     }
 
     #endregion
