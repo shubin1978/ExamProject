@@ -7,14 +7,14 @@ namespace ProjectApp.DAL;
 
 public class JsonContext : FileContext, IContext
 { 
-    public List<Object> Objects { get; set; }
+    public List<Object?> Objects { get; set; }
     public event Action<string> Log;
-    private readonly JsonSerializerOptions _options;
+    private readonly JsonSerializerOptions? _options;
     
     public JsonContext(string pathToObjects) : base(pathToObjects)
     //формируется автоматически при имплементации
     {
-        Objects = new List<Object>();
+        Objects = new List<Object?>();
         
         _options = new JsonSerializerOptions
         {
