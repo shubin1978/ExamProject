@@ -54,7 +54,10 @@ public static class CompanyView
         }
 
         newObject.At = number;
-        newObject.Title = CLI.InputString("Введите название и гаражный номер");
+
+        var name_ = CLI.InputString("Введите название:");
+        var number_ = CLI.InputString("Введите гаражный номер:");
+        newObject.Title = name_ + "_#" + number_;
         newObject.Position = CLI.InputString("Введите местоположение объекта");
         newObject.Status = Status.Avtive;
         newObject.Equipment = new List<Unit>();
